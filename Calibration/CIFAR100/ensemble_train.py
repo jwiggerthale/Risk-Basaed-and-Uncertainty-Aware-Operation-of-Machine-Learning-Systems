@@ -10,6 +10,8 @@ from modules.cifar_data_utils import get_cifar_files, class_map, image_dataset, 
 from base_models import VGG16, VIT, resnet18, efficientnet_b0
 import argparse
 from modules.unucertainty_utils import heteroscedastic_ce
+from utils import set_seed
+
 
 parser = argparse.ArgumentParser()
 
@@ -31,6 +33,20 @@ parser.add_argument(
     default=5,
     help="Number of models in ensemble (default: 5)",
 )
+
+parser.add_argument(
+    "--seed",
+    type = int,
+    default=1,
+    help="Seed used for training",
+)
+
+
+
+args = parser.parse_args()
+
+
+set_seed(seed = args.seed)
 
 
 # python3 ensemble_train.py --model resnet --out_dir /data/PhDThesis/SMiLe/CIFAR/resnet --num_models 5
