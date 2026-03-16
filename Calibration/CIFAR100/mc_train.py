@@ -48,7 +48,6 @@ call with:
   scheduler
   train_loader
   val_loader
-  aug_loader --> implemented to cover augmentation introduced in Chapter 7 of the Thesis; not relevant for benchmarking conducted in Chapter 5
   num_epochs
   early_stopping --> when to interrupt training if no improvement occurs
   out_dir --> directory where models are stored
