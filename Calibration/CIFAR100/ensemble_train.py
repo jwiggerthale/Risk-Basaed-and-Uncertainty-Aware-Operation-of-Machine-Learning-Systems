@@ -7,7 +7,7 @@ from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau
 import numpy as np
 import os
 from modules.cifar_data_utils import get_cifar_files, class_map, image_dataset, transform_aug, transform_test, transform_train, transform_val
-from modules.base_models import VGG16, VIT, resnet18, efficientnet_b0
+from base_models import VGG16, VIT, resnet18, efficientnet_b0
 import argparse
 from modules.unucertainty_utils import heteroscedastic_ce
 
