@@ -9,7 +9,7 @@ import os
 from modules.cifar_data_utils import get_cifar_files, class_map, image_dataset, transform_aug, transform_test, transform_train, transform_val
 from edl_modules.models import VGG16, resnet18, efficientnet_b0
 from edl_modules.edl_basics import evidential_classification
-
+from utils import set_seed
 
 '''
 function to train model
@@ -87,6 +87,10 @@ def train(model: nn.Module,
             break
 
         
+
+seed = 1
+set_seed(seed)
+
 
 train_files, val_files, test_files = get_cifar_files()
 
