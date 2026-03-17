@@ -97,7 +97,7 @@ for x, y, _ in iter(test_loader):
     pred = model.forward(x)
     sums = pred.sum(axis = 1, keepdim = True)
     probs = pred / sums
-    uncs = 10 / pred.sum(axis = 1)
+    uncs = 100 / pred.sum(axis = 1)
     uncertainties.extend(uncs.cpu().detach().tolist())
     preds.extend(probs.cpu().detach().tolist())
     labels.extend(y.tolist())
@@ -223,7 +223,7 @@ for severity in np.arange(1, 6):
                 pred = model.forward(x)
                 sums = pred.sum(axis = 1, keepdim = True)
                 probs = pred / sums
-                uncs = 10 / pred.sum(axis = 1)
+                uncs = 100 / pred.sum(axis = 1)
                 uncertainties.extend(uncs.cpu().detach().tolist())
                 all_uncs.extend(uncs.cpu().detach().tolist())
                 c_uncs.extend(uncs.cpu().detach().tolist())
