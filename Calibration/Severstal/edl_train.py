@@ -10,6 +10,7 @@ import numpy as np
 import os
 from modules.cifar_data_utils import get_cifar_files, class_map, image_dataset, transform_aug, transform_test, transform_train, transform_val
 from modules.data_utils import image_dataset, image_dataset_pd, transform_test, transform_train, transform_val, transform_aug
+from utils import set_seed
 
 from edl.models import VGG16, resnet18, efficientnet_b0
 from edl.edl_basics import evidential_classification
@@ -105,7 +106,11 @@ def train(model: nn.Module,
             print(f'Early stopping in epoch {epoch +1}')
             break
 
-        
+
+
+seed = 1 
+set_seed(seed)
+
 
 # get data loader
 train_files = pd.read_csv('train_files_large.csv')
