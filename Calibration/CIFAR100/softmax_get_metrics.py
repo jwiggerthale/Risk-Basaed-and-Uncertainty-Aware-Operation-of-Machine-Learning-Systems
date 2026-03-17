@@ -75,40 +75,6 @@ for fp in files:
             c_sets[key]  = c_loader
 
 
-'''
-import matplotlib.pyplot as plt
-
-all_ims = {}
-for key, dl in c_sets.items():
-    if 'sev_1' in key:
-        ims, _ = next(iter(dl))
-        all_ims[key.split('_')[0]] =ims[0].permute(1,2,0)
-
-use_keys = []
-
-fig, axes = plt.subplots(2,3, figsize = (30, 20))
-axes[0][0].imshow(all_ims[use_keys[0]])
-axes[0][0].set_title(use_keys[0], fontsize = 18)
-axes[0][0].axis('off')
-axes[0][1].imshow(all_ims[use_keys[1]])
-axes[0][1].set_title(use_keys[1], fontsize = 18)
-axes[0][1].axis('off')
-axes[0][2].imshow(all_ims[use_keys[2]])
-axes[0][2].set_title(use_keys[2], fontsize = 18)
-axes[0][2].axis('off')
-axes[1][0].imshow(all_ims[use_keys[3]])
-axes[1][0].set_title(use_keys[3], fontsize = 18)
-axes[1][0].axis('off')
-axes[1][1].imshow(all_ims[use_keys[4]])
-axes[1][1].set_title(use_keys[4], fontsize = 18)
-axes[1][1].axis('off')
-axes[1][2].imshow(all_ims[use_keys[5]])
-axes[1][2].set_title(use_keys[5], fontsize = 18)
-axes[1][2].axis('off')
-plt.tight_layout()
-plt.savefig('CIFAR_C_Example.png')
-'''
-
 
 # get model and load weights
 if 'resnet' in args.model.lower():
