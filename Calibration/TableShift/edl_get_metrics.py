@@ -77,7 +77,7 @@ ood_loader = DataLoader(ood_data_set, batch_size = 4096)
 
 # get model
 seed = 2
-model = heart_model(temperature = 1.0, input_dim = 136).double().to('cuda')
+model = heart_model(temperature = 1.0, input_dim = 142).double().to('cuda')
 model.load_state_dict(torch.load(f'./edl/models/model_diabetes_survey_seed_{seed}.pth'))
 model.eval()
 
