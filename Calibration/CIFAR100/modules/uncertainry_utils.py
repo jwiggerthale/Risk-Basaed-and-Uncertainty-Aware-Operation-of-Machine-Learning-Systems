@@ -75,11 +75,6 @@ returns:
 '''
 @torch.no_grad()
 def mc_dropout_with_heteroscedastic(model, x, n_dropout=30, n_noise=10):
-    """
-    Speichert:
-      - probs_mean_d: Mittel Ã¼ber Logit-Samples je Dropout-Pass (D, B, C)
-      - Daraus: H[E_{w,z}[p]], E_{w,z}[H[p]], und BALD.
-    """
     import torch.nn.functional as F
 
     def entropy(p, dim=-1, eps=1e-12):
@@ -103,7 +98,7 @@ def mc_dropout_with_heteroscedastic(model, x, n_dropout=30, n_noise=10):
         logits = mu.unsqueeze(0) + eps * std.unsqueeze(0)  # (S, B, C)
         probs  = F.softmax(logits, dim=-1)                 # (S, B, C)
 
-        probs_mean_d = probs.mean(dim=0)                   # (B, C)  -> speichere!
+        probs_mean_d = probs.mean(dim=0)                   # (B, C)  
         probs_mean_per_d.append(probs_mean_d)
 
         exp_entropy_accum += entropy(probs, dim=-1).mean(dim=0)  # (B,)
@@ -115,7 +110,6 @@ def mc_dropout_with_heteroscedastic(model, x, n_dropout=30, n_noise=10):
     expected_entropy = exp_entropy_accum / n_dropout             # E_{w,z}[H[p]]
     epistemic_entropy = (pred_entropy - expected_entropy).clamp_min(0.0)
     eu = probs_mean_stack.std(dim= 0)#.mean(dim = -1)
-    # Varianz der gemittelten Wahrscheinlichkeiten zwischen Dropout-PÃ¤ssen
     probs_var_across_dropout = probs_mean_stack.var(dim=0, unbiased=False).mean(dim=-1)  # (B,)
 
     return {
