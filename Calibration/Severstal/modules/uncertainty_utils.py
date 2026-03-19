@@ -114,8 +114,8 @@ def mc_dropout_with_heteroscedastic(model, x, n_dropout=30, n_noise=10):
     return {
         "probs": mean_probs,
         "pred_entropy": pred_entropy,
-        "au": expected_entropy,     # aleatorischer Anteil im Mittel
-        "eu": eu,   # BALD-Anteil
+        "au": expected_entropy,     # 
+        "eu": eu,   # 
         "probs_var_across_dropout": probs_var_across_dropout,
     }
 
