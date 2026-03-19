@@ -114,17 +114,7 @@ ood_loader = DataLoader(ood_data_set, batch_size = 4096)
 models = []
 for f in model_files:
     model = heart_model(temperature = 1.0, input_dim = 142, num_classes=2).double().to('cuda')
-    #model.load_state_dict(torch.load(f))
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.00001)
-    train_loop(train_loader = train_loader, 
-                    val_loader = test_loader, 
-                    model = model, 
-                    optimizer = optimizer,
-                    criterion = nn.BCEWithLogitsLoss(),
-                    device = 'cuda', 
-                    model_name = f'{args.save_dir}/tuned.pth', 
-                    num_epochs=4,
-                    early_stopping = 2)
+    model.load_state_dict(torch.load(f))
     model.eval()
     models.append(model)
 
