@@ -315,7 +315,6 @@ def plot_multiclass_calibration(probs: list, labels:list,
         # Konvertiere zu binärem Problem: Klasse vs. Rest
         y_binary = (labels == class_idx).astype(int)
         y_prob = probs[:, class_idx]
-        # Berechne Calibration Curve
         try:
             prob_true, prob_pred = calibration_curve(
                 y_binary, y_prob, n_bins=n_bins, strategy=strategy
@@ -386,10 +385,7 @@ def plot_aggregated_calibration_curve(
     valid = bin_count > 0
     x_vals = bin_conf[valid]
     y_vals = bin_acc[valid]
-
-    # Reliability diagram: Punkte/Line + Diagonale
     ax.plot([0, 1], [0, 1], linestyle="--")  # perfect calibration
-    #ax.plot(x_vals, y_vals, marker="o")
     if len(x_vals) > 3:  # Need at least 4 points for cubic
         print('applying smooothing')
         f = interp1d(x_vals, y_vals, kind='cubic', bounds_error=False, fill_value='extrapolate')
