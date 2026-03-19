@@ -73,17 +73,6 @@ def set_seed(seed: int = 42):
 
 
 
-stats_calibrated = {}
-stats_uncalibrated = {}
-accs = []
-thresholds = np.arange(0, 1.02, 0.02)
-P_to_N_ratios_powers = np.arange(-4, 5)
-P_to_N_ratios = 2.0 ** P_to_N_ratios_powers
-all_wba_vals_5 = {ratio: [] for ratio in P_to_N_ratios}
-all_wba_vals_1 = {ratio: [] for ratio in P_to_N_ratios}
-all_er_vals_5 = {ratio: [] for ratio in P_to_N_ratios}
-all_er_vals_1 = {ratio: [] for ratio in P_to_N_ratios}
-
 n_models = 5
 
 for seed in [2, 4, 8, 13, 19 , 22, 31,  34, 44, 50, 53, 61, 68, 71, 75, 83, 86, 90, 97, 101]:
