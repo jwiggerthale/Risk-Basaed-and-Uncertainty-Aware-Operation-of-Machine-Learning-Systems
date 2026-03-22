@@ -5,7 +5,15 @@ this script implements a feed forward NN for classification
 import torch.nn as nn
 import torch
 
-
+'''
+Feed forward NN
+(called herat model since I first implemented the model on a heard disease prediction dataset)
+initialize with: 
+    input_dim: int = 21,--> how many features are in your dataset
+    layers: list = [512, 256, 256, 128, 128, 64], --> number of neurons in hidden layers
+    num_classes: int = 2, --> number of output neurons (classes in the dataset)
+    temperature: float = 1.5 --> temperature factor for temperature scaling; experimental; not used for thesis (set to 1)
+'''
 class heart_model(nn.Module):
     def __init__(self, 
                  input_dim: int = 21,
