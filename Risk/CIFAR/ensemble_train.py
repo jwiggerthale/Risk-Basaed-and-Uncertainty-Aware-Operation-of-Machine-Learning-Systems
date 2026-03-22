@@ -9,7 +9,7 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 import numpy as np
 import os
 from modules.cifar_data_utils import get_cifar_files, class_map, image_dataset, transform_test, transform_train, transform_val, get_cost_matrix
-from ensemble_models.base_models import  resnet18, efficientnet_b0
+from modules.base_models import  resnet18, efficientnet_b0
 import argparse
 from modules.unucertainty_utils import new_cost_sensitive_heteroscedastic_ce
 from modules.utils import set_seed
