@@ -66,6 +66,13 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--scale",
+    type=int
+    default=0,
+    help="Where to store (default: ensemble_resnet)",
+)
+
+parser.add_argument(
     "--save_dir",
     default="./CSL_2_ensemble_resnet",
     help="Where ensemble models are stored",
@@ -183,27 +190,28 @@ else:
 
 
 # get logits for val data (calibration)
-eus = []
-preds = []
-pred_cls = []
-sigmas = []
-labels = []
-for x, y, _ in iter(val_loader):
-    x = x.cuda()
-    pred, probs, un, sigma = mc_predict(models = models, x = x)
-    eus.extend(un.cpu().detach().tolist())
-    preds.append(probs.cpu())
-    labels.append(y)
-    sigmas.extend(sigma.cpu().detach().tolist())
-    pred_cls.extend(pred.cpu().detach().tolist())
-
-logits_val = torch.cat(preds, dim=0)
-y_val = torch.cat(labels, dim=0)
-
-# get calibrator
-cal = get_cal(y_cal = y_val, 
-              logits_cal = logits_val)
-
+if args.scale == 1:
+    eus = []
+    preds = []
+    pred_cls = []
+    sigmas = []
+    labels = []
+    for x, y, _ in iter(val_loader):
+        x = x.cuda()
+        pred, probs, un, sigma = mc_predict(models = models, x = x)
+        eus.extend(un.cpu().detach().tolist())
+        preds.append(probs.cpu())
+        labels.append(y)
+        sigmas.extend(sigma.cpu().detach().tolist())
+        pred_cls.extend(pred.cpu().detach().tolist())
+    
+    logits_val = torch.cat(preds, dim=0)
+    y_val = torch.cat(labels, dim=0)
+    
+    # get calibrator
+    cal = get_cal(y_cal = y_val, 
+                  logits_cal = logits_val)
+    
 # Evaluation on test data
 eus = []
 preds = []
@@ -221,8 +229,10 @@ for x, y, _ in iter(test_loader):
 
 
 logits = torch.cat(preds, dim=0)
-preds = cal.predict_proba(logits) 
-
+if args.scale == 1:
+    preds = cal.predict_proba(logits) 
+else:
+    preds = logits
 
 
 get_metrics(preds = preds, 
@@ -249,7 +259,10 @@ for x, y, _ in iter(aug_loader):
 
 
 logits = torch.cat(preds, dim=0)
-preds = cal.predict_proba(logits) 
+if args.scale == 1:
+    preds = cal.predict_proba(logits) 
+else:
+    preds = logits
 get_metrics(preds = preds, 
             labels = labels,
             pred_cls = pred_cls, 
@@ -298,7 +311,10 @@ for severity in np.arange(1, 6):
             c_sigmas.extend(sigma.cpu().detach().tolist())
     
         logits = torch.cat(preds, dim=0)
-        preds = cal.predict_proba(logits) 
+        if args.scale == 1:
+            preds = cal.predict_proba(logits) 
+        else:
+            preds = logits
         all_preds.extend(preds)
         c_preds.extend(preds)
 
