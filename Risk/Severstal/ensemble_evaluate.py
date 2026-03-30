@@ -67,9 +67,9 @@ parser.add_argument(
 
 parser.add_argument(
     "--scale",
-    type=int
+    type=int,
     default=0,
-    help="Where to store (default: ensemble_resnet)",
+    help="Whether to apply scaling (1 if you want to use scaling)"
 )
 
 parser.add_argument(
