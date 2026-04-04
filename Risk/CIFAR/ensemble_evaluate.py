@@ -43,10 +43,6 @@ def mc_predict(models: list,
     # 4) aggregate and get uncertainty
     mean_probs = probs.mean(dim=0)             # [B, C]
     pred_cls = mean_probs.argmax(dim=1)
-    #un = probs.std(dim = 0).mean(dim = 1)
-    # (optional) sinnvollere Unsicherheiten als "std-sum":
-    # PrÃ¤diktive Entropie
-    #entropy = -(mean_probs.clamp_min(1e-8) * mean_probs.clamp_min(1e-8).log()).sum(dim=1)
     eu = ((probs-mean_probs)**2).sum(dim = (0,2))
     return pred_cls, mean_probs, eu, mean_sigmas
 
